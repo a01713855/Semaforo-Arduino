@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semáforo — STATUS (demo)</title>
+<style>
+:root { --housing:#b7b7b7; --pole:#bfbfbf; --red:#ff0000; --yellow:#f4ff2d; --green:#15f14c; }
+* { box-sizing:border-box; }
+body { margin:0; background:#fff; color:#000; font-family:Inter,Arial,sans-serif; display:flex; justify-content:center; min-height:100vh; }
+.stage { display:flex; gap:80px; align-items:flex-start; padding:60px 24px; max-width:744px; width:100%; }
+.semaforo-col { display:flex; flex-direction:column; align-items:center; }
+.housing { width:116px; background:var(--housing); border:3px solid #000; border-radius:10px; display:flex; flex-direction:column; align-items:center; gap:12px; padding:14px 8px; }
+.light { width:100px; height:100px; border-radius:50%; border:3px solid #000; opacity:.22; transition:opacity .2s, box-shadow .2s; }
+.light.red { background:var(--red); } .light.yellow { background:var(--yellow); } .light.green { background:var(--green); }
+.light.on { opacity:1; box-shadow:0 0 24px rgba(0,0,0,.35); }
+.pole { width:66px; height:191px; background:var(--pole); border:3px solid #000; border-top:none; border-radius:0 0 10px 10px; }
+.panel h1 { font-size:36px; font-weight:400; margin:30px 0 10px; }
+.conn { font-size:14px; margin-bottom:18px; color:#0a7d2c; }
+.state-row,.countdown { font-size:22px; margin:8px 0; } .state { font-weight:700; }
+#count { font-size:40px; font-weight:700; } .unit { margin-left:4px; }
+.bar { width:280px; height:12px; border:2px solid #000; border-radius:6px; overflow:hidden; margin-top:10px; }
+#bar-fill { height:100%; width:0%; background:#000; transition:width .5s linear; }
+.hint { margin-top:18px; font-size:12px; color:#444; max-width:320px; }
+@media (max-width:640px){ .stage{flex-direction:column;align-items:center;gap:20px;} }
+</style>
+</head>
+<body>
+  <main class="stage">
+    <section class="semaforo-col">
+      <div class="housing">
+        <div id="light-red" class="light red"></div>
+        <div id="light-yellow" class="light yellow"></div>
+        <div id="light-green" class="light green"></div>
+      </div>
+      <div class="pole"></div>
+    </section>
+    <section class="panel">
+      <h1>STATUS</h1>
+      <div class="conn">● Modo prueba (demo local)</div>
+      <div class="state-row"><span>Luz activa:</span> <span id="state-name" class="state">—</span></div>
+      <div class="countdown"><span>Cambia en:</span> <span id="count">—</span><span class="unit">s</span></div>
+      <div class="bar"><div id="bar-fill"></div></div>
+      <p class="hint">Demo sin hardware: VERDE 15s → AMARILLO 5s → ROJO 20s.<br/>Código y versión con Arduino en <a href="https://github.com/a01713855/Semaforo-Arduino">GitHub</a>.</p>
+    </section>
+  </main>
+<script>
+const elR = document.getElementById("light-red"),
+      elY = document.getElementById("light-yellow"),
+      elG = document.getElementById("light-green"),
+      elS = document.getElementById("state-name"),
+      elC = document.getElementById("count"),
+      elB = document.getElementById("bar-fill");
+const NAMES = { RED:"ROJO", YELLOW:"AMARILLO", GREEN:"VERDE" };
+const SEQ = [["GREEN",15],["YELLOW",5],["RED",20]];
+function paint(s){ elR.classList.toggle("on",s==="RED"); elY.classList.toggle("on",s==="YELLOW"); elG.classList.toggle("on",s==="GREEN"); elS.textContent=NAMES[s]; }
+let i = 0;
+(function next(){
+  const name = SEQ[i][0], dur = SEQ[i][1];
+  let t = dur; paint(name);
+  elC.textContent = t; elB.style.width = "100%";
+  const iv = setInterval(()=>{
+    t--;
+    if (t<=0){ clearInterval(iv); i=(i+1)%SEQ.length; next(); return; }
+    elC.textContent = t; elB.style.width = (t/dur*100)+"%";
+  },1000);
+})();
+</script>
+</body>
+</html>
