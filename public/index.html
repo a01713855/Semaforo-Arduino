@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semáforo — STATUS</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="stage">
+    <section class="semaforo-col">
+      <div class="housing">
+        <div id="light-red" class="light red"></div>
+        <div id="light-yellow" class="light yellow"></div>
+        <div id="light-green" class="light green"></div>
+      </div>
+      <div class="pole"></div>
+    </section>
+
+    <section class="panel">
+      <h1>STATUS</h1>
+      <div id="conn" class="conn disconnected">● Desconectado</div>
+      <div class="state-row">
+        <span class="label">Luz activa:</span>
+        <span id="state-name" class="state">—</span>
+      </div>
+      <div class="countdown">
+        <span class="label">Cambia en:</span>
+        <span id="count">—</span><span class="unit">s</span>
+      </div>
+      <div class="bar"><div id="bar-fill"></div></div>
+      <p class="hint">Arduino UNO · <span id="mode">Serial COM9</span> · Rojo pin 2 (20s) · Amarillo pin 3 (5s) · Verde pin 4 (15s)</p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

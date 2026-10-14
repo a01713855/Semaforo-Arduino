@@ -1,0 +1,72 @@
+/* Fiel a Figma semaforo: fondo #FFFFFF, carcasa #B7B7B7, poste #BFBFBF */
+:root {
+  --housing: #b7b7b7;
+  --pole: #bfbfbf;
+  --red: #ff0000;
+  --yellow: #f4ff2d;
+  --green: #15f14c;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #000;
+  font-family: Inter, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+.stage {
+  display: flex;
+  gap: 80px;
+  align-items: flex-start;
+  padding: 60px 24px;
+  max-width: 744px;
+  width: 100%;
+}
+.semaforo-col { display: flex; flex-direction: column; align-items: center; }
+.housing {
+  width: 116px;
+  background: var(--housing);
+  border: 3px solid #000;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 8px;
+}
+.light {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  opacity: 0.22;
+  transition: opacity 0.2s, box-shadow 0.2s;
+}
+.light.red { background: var(--red); }
+.light.yellow { background: var(--yellow); }
+.light.green { background: var(--green); }
+.light.on { opacity: 1; box-shadow: 0 0 24px rgba(0,0,0,0.35); }
+.pole {
+  width: 66px;
+  height: 191px;
+  background: var(--pole);
+  border: 3px solid #000;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+}
+.panel h1 { font-size: 36px; font-weight: 400; margin: 30px 0 10px; }
+.conn { font-size: 14px; margin-bottom: 18px; }
+.conn.connected { color: #0a7d2c; }
+.conn.disconnected { color: #b00020; }
+.state-row, .countdown { font-size: 22px; margin: 8px 0; }
+.state { font-weight: 700; }
+#count { font-size: 40px; font-weight: 700; }
+.unit { margin-left: 4px; }
+.bar { width: 280px; height: 12px; border: 2px solid #000; border-radius: 6px; overflow: hidden; margin-top: 10px; }
+#bar-fill { height: 100%; width: 0%; background: #000; transition: width 0.5s linear; }
+.hint { margin-top: 18px; font-size: 12px; color: #444; max-width: 320px; }
+@media (max-width: 640px) {
+  .stage { flex-direction: column; align-items: center; gap: 20px; }
+}
